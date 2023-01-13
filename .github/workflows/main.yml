@@ -6,13 +6,22 @@ on:
     - cron:  '0 23 * * *'
 
 jobs:
-  run-python-script:
+  checkin:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-        with:
-          python-version: '3.9.0'
-      - run: pip install requests
-      - run: python checkin.py
+    - uses: actions/checkout@v2
+
+    - name: Install Python
+      run: |
+        sudo apt update && \
+        sudo apt install python3
+      
+    - name: requirements
+      run: |
+        pip3 install requests
+
+    - name: Checkin
+      run: |
+        python3 checkin.py 
       
