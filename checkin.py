@@ -1,7 +1,7 @@
 import requests,json,os
 
-sess = 'eyJ1c2VySWQiOjEzMzM2NSwiX2V4cGlyZSI6MTY4OTYwMjAzMzYyNywiX21heEFnZSI6MjU5MjAwMDAwMDB9' # cookie中koa:sess的值
-sig = 't9dWD9xMN5aqsp2ZU8biDruUpvg' # cookie中koa:sess.sig的值
+sess = 'eyJ1c2VySWQiOjEzMzM2NSwiX2V4cGlyZSI6MTcxNzM4MjEzNTYyMywiX21heEFnZSI6MjU5MjAwMDAwMDB9' # cookie中koa:sess的值
+sig = '2pt06LMTit0oQeNx0K_0L_ugyEs' # cookie中koa:sess.sig的值
 cookie = 'koa:sess={0}; koa:sess.sig={1}'.format(sess, sig) # 也可直接复制相同格式的cookie 即cookie = '你的cookie'
 
 def dailyCheckin():
