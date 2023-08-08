@@ -5,9 +5,9 @@ sig = '2pt06LMTit0oQeNx0K_0L_ugyEs' # cookie中koa:sess.sig的值
 cookie = 'koa:sess={0}; koa:sess.sig={1}'.format(sess, sig) # 也可直接复制相同格式的cookie 即cookie = '你的cookie'
 
 def dailyCheckin():
-    checkin_url = "https://glados.rocks/api/user/checkin"
-    status_url = "https://glados.rocks/api/user/status"
-    origin = "https://glados.rocks"
+    checkin_url = "https://glados.one/api/user/checkin"
+    status_url = "https://glados.one/api/user/status"
+    origin = "https://glados.one"
     useragent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Safari/537.36"
     payload = {
       'token': "glados.network"
