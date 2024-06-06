@@ -13,15 +13,10 @@ if __name__ == '__main__':
     success, fail = 0, 0        # 成功账号数量 失败账号数量
     sendContent = ""
 
-    
-    cookie = 'koa:sess=eyJ1c2VySWQiOjEzMzM2NSwiX2V4cGlyZSI6MTc0MTkyMTM4NjUyMiwiX21heEFnZSI6MjU5MjAwMDAwMDB9; koa:sess.sig=d2Ckmilaq5XxwL2iQarkOxW2q64;'
-
-    # # glados账号cookie 直接使用数组 如果使用环境变量需要字符串分割一下
-    # cookies = os.environ.get("COOKIES", []).split("&")
-    # if cookies[0] == "":
-    #     print('未获取到COOKIE变量')
-    #     cookies = []
-    #     exit(0)
+    cookie = os.environ.get("MY_COOKIE")
+    if cookie == "":
+        print('未获取到COOKIE变量')
+        exit(0)
 
     url = "https://glados.rocks/api/user/checkin"
     url2 = "https://glados.rocks/api/user/status"
