@@ -18,22 +18,10 @@ def dailyCheckin():
         'user-agent': useragent
     })
 
-    checkin_data = checkin_response.json()
     state_data = state_response.json()
 
-    print('Checkin Response:', checkin_data)
     print('State Response:', state_data)
 
-    if 'message' in checkin_data:
-        print('message: ', checkin_data['message'])
-    else:
-        print('No message found in checkin response')
-
-    if 'data' in state_data:
-        print('system_date: ', state_data['data']['system_date'])
-        print('leftdays: ', state_data['data']['leftDays'].split('.')[0])
-    else:
-        print('No data found in state response')
 
 if __name__ == '__main__':
     dailyCheckin()
