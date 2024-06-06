@@ -6,7 +6,7 @@ import os
 # -------------------------------------------------------------------------------------------
 if __name__ == '__main__':
 
-    cookie = os.getenv("MY_COOKIE")
+    cookie = os.environ["MY_COOKIE"]
     if cookie == None:
         print('未获取到COOKIE变量')
         exit(0)
