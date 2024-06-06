@@ -3,6 +3,7 @@ import requests,json,os
 sess = 'eyJ1c2VySWQiOjEzMzM2NSwiX2V4cGlyZSI6MTcxNzM4MjEzNTYyMywiX21heEFnZSI6MjU5MjAwMDAwMDB9' # cookie中koa:sess的值
 sig = 'd2Ckmilaq5XxwL2iQarkOxW2q64' # cookie中koa:sess.sig的值
 cookie = 'koa:sess={0}; koa:sess.sig={1}'.format(sess, sig) # 也可直接复制相同格式的cookie 即cookie = '你的cookie'
+print("cookie:",cookie)
 
 def dailyCheckin():
     checkin_url = "https://glados.rocks/api/user/checkin"
