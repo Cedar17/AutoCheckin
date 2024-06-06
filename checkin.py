@@ -1,5 +1,6 @@
 import requests,json,os
 
+cookie = os.environ["MY_COOKIE"]
 
 def dailyCheckin():
     checkin_url = "https://glados.rocks/api/user/checkin"
@@ -12,15 +13,19 @@ def dailyCheckin():
     payload = {
       'token': "glados.one"
     }
-
-    checkin_response = requests.post(checkin_url, headers={'cookie': cookie, 'referer': referer, 'origin': origin,
-                            'user-agent': useragent, 'content-type': 'application/json;charset=UTF-8'}, data=json.dumps(payload))
+    checkin_response = requests.post(checkin_url, headers={
+      'cookie': cookie,
+      'referer': referer,
+      'origin': origin,
+      'user-agent': useragent,
+      'content-type': 'application/json;charset=UTF-8'}, 
+      data=json.dumps(payload))
 
     state_response = requests.get(status_url, headers={
-        'cookie': cookie,
-        'referer': referer,
-        'origin': origin,
-        'user-agent': useragent
+      'cookie': cookie,
+      'referer': referer,
+      'origin': origin,
+      'user-agent': useragent
     })
 
     checkin_data = checkin_response.json()
