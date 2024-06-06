@@ -18,3 +18,9 @@
  
 - 2024-04-11
     - Manually restart workflow
+
+- 2024-06-06
+    - Use GitHub Actions Secret as global environment
+    - Update cookie
+    - Update useragent
+    - Add `checkin_2.py` to the repository

@@ -1,7 +1,5 @@
 import requests,json,os
 
-cookie = 'koa:sess=eyJ1c2VySWQiOjEzMzM2NSwiX2V4cGlyZSI6MTc0MTkyMTM4NjUyMiwiX21heEFnZSI6MjU5MjAwMDAwMDB9; koa:sess.sig=d2Ckmilaq5XxwL2iQarkOxW2q64;'
-print("cookie:",cookie)
 
 def dailyCheckin():
     checkin_url = "https://glados.rocks/api/user/checkin"
