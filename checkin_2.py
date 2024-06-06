@@ -5,18 +5,12 @@ import os
 # github workflows
 # -------------------------------------------------------------------------------------------
 if __name__ == '__main__':
-    # pushplus秘钥 申请地址 http://www.pushplus.plus
-    sckey = os.environ.get("PUSHPLUS", "")
-
-    # 推送内容
-    title = "Glados"
-    success, fail = 0, 0        # 成功账号数量 失败账号数量
-    sendContent = ""
 
     cookie = os.environ.get("MY_COOKIE")
     if cookie == "":
         print('未获取到COOKIE变量')
         exit(0)
+    print("checkin_2 cookie:", cookie)
 
     url = "https://glados.rocks/api/user/checkin"
     url2 = "https://glados.rocks/api/user/status"
