@@ -6,8 +6,8 @@ import os
 # -------------------------------------------------------------------------------------------
 if __name__ == '__main__':
 
-    cookie = os.environ.get("MY_COOKIE")
-    if cookie == "":
+    cookie = os.getenv("MY_COOKIE")
+    if cookie == None:
         print('未获取到COOKIE变量')
         exit(0)
     print("checkin_2 cookie:", cookie)
