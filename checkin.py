@@ -13,23 +13,27 @@ def dailyCheckin():
       'token': "glados.one"
     }
 
-    checkin = requests.post(checkin_url, headers = {
-      'cookie': cookie ,
-      'origin':origin,
-      'user-agent':useragent,
-      'content-type':'application/json;charset=UTF-8'
-    }, data = json.dumps(payload))
-
-    state =  requests.get(status_url, headers = {
-      'cookie': cookie ,
-      'user-agent':useragent
+    state_response = requests.get(status_url, headers={
+        'cookie': cookie,
+        'user-agent': useragent
     })
-    dict = json.loads(checkin.text) # 获取返回的信息，其中message含有结果信息
 
-    print('message: '+json.loads(checkin.text)['message'])
-    print('system_date: '+json.loads(state.text)['data']['system_date'])
-    print('leftdays: '+json.loads(state.text)['data']['leftDays'].split('.')[0])
+    checkin_data = checkin_response.json()
+    state_data = state_response.json()
+
+    print('Checkin Response:', checkin_data)
+    print('State Response:', state_data)
+
+    if 'message' in checkin_data:
+        print('message: ', checkin_data['message'])
+    else:
+        print('No message found in checkin response')
+
+    if 'data' in state_data:
+        print('system_date: ', state_data['data']['system_date'])
+        print('leftdays: ', state_data['data']['leftDays'].split('.')[0])
+    else:
+        print('No data found in state response')
 
 if __name__ == '__main__':
-
-    dailyCheckin()   
+    dailyCheckin()
