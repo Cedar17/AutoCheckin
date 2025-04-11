@@ -30,3 +30,7 @@
   
  - 2024-12-23
     - continue running Actions 
+
+- 2024-04-11
+    - Strage failure. Update  Settings > Secret and variables > Actions > MY_COOKIE
+    - Manually restart workflow
