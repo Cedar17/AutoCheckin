@@ -25,5 +25,6 @@ jobs:
       run: |
         python3 checkin.py
       env:
-        MY_COOKIE: ${{ secrets.MY_COOKIE }}
-      
+        GLADOS_COOKIE: ${{ secrets.GLADOS_COOKIE }}
+        PTER_COOKIE: ${{ secrets.PTER_COOKIE }}
+        
