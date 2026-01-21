@@ -1,42 +1,53 @@
-import requests, json, os
+import requests
+import os
 
-if __name__ == '__main__':
-    # 环境变量缺失直接抛出 KeyError
-    cookie = os.environ["MY_COOKIE"]
-    
-    # 域名更新
-    domain = "glados.cloud"
-    base_url = f"https://{domain}"
-    
+# 提取公共请求头，减少重复代码
+COMMON_UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+
+def glados_checkin():
+    key = os.environ.get("GLADOS_COOKIE")
+    if not key: return print("❌ [GLaDOS] 缺少 Cookie")
+
+    try:
+        # 使用 Session 复用 TCP 连接
+        with requests.Session() as s:
+            s.headers.update({'cookie': key, 'user-agent': COMMON_UA})
+            base = "https://glados.cloud/api/user"
+            
+            # 1. 签到 (直接用 json 参数，自动处理 headers 和 dumps)
+            checkin = s.post(f'{base}/checkin', json={'token': 'glados.cloud'}).json()
+            print(f"✅ [GLaDOS] 签到: {checkin.get('message')}")
+
+            # 2. 查询
+            status = s.get(f'{base}/status').json()
+            days = int(float(status.get('data', {}).get('leftDays', 0)))
+            print(f"📅 [GLaDOS] 剩余: {days} 天")
+            
+    except Exception as e:
+        print(f"❌ [GLaDOS] 错误: {e}")
+
+def pter_checkin():
+    key = os.environ.get("PTER_COOKIE")
+    if not key: return print("❌ [PTer] 缺少 Cookie")
+
     headers = {
-        'cookie': cookie,
-        'referer': f'{base_url}/console/checkin',
-        'origin': base_url,
-        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36',
-        'content-type': 'application/json;charset=UTF-8'
+        'cookie': key,
+        'user-agent': COMMON_UA,
+        'x-requested-with': 'XMLHttpRequest', # 关键 Header
+        'referer': 'https://pterclub.net/index.php'
     }
 
-    # 1. 签到
     try:
-        checkin_resp = requests.post(f'{base_url}/api/user/checkin', headers=headers, data=json.dumps({'token': 'glados.cloud'}))
-        checkin_resp.raise_for_status()
+        res = requests.get("https://pterclub.net/attendance-ajax.php", headers=headers, timeout=10).json()
         
-        # 核心修改：只提取 message 字段
-        res_json = checkin_resp.json()
-        print(f"✅ 签到结果: {res_json.get('message')}") 
+        icon = "✅" if res.get('status') == "1" else "⚠️"
+        print(f"{icon}  [PTer] 消息: {res.get('message')}")
 
     except Exception as e:
-        print(f"❌ Checkin Failed: {e}")
+        print(f"❌ [PTer] 错误: {e}")
 
-    # 2. 查询状态
-    try:
-        state_resp = requests.get(f'{base_url}/api/user/status', headers=headers)
-        state_resp.raise_for_status()
-        
-        # 核心修改：只提取 leftDays 并取整
-        data = state_resp.json().get('data', {})
-        days = float(data.get('leftDays', 0))
-        print(f"📅 剩余天数: {int(days)}")
-
-    except Exception as e:
-        print(f"❌ Status Check Failed: {e}")
+if __name__ == '__main__':
+    print("--- 开始签到 ---")
+    glados_checkin()
+    pter_checkin()
+    print("--- 任务结束 ---")
