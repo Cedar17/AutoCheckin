@@ -23,7 +23,6 @@ jobs:
 
     - name: Checkin
       run: |
-        python3 checkin_2.py 
         python3 checkin.py
       env:
         MY_COOKIE: ${{ secrets.MY_COOKIE }}
