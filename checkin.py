@@ -6,7 +6,7 @@ if __name__ == '__main__':
     
     # 域名更新
     domain = "glados.cloud"
-    base_url = f"https://{domin}"
+    base_url = f"https://{domain}"
     
     headers = {
         'cookie': cookie,
@@ -17,12 +17,26 @@ if __name__ == '__main__':
     }
 
     # 1. 签到
-    # 使用 raise_for_status() 让 HTTP 4xx/5xx 直接报错
-    checkin = requests.post(f'{base_url}/api/user/checkin', headers=headers, data=json.dumps({'token': glados.cloud}))
-    checkin.raise_for_status()
-    print("Checkin:", checkin.json())
+    try:
+        checkin_resp = requests.post(f'{base_url}/api/user/checkin', headers=headers, data=json.dumps({'token': 'glados.cloud'}))
+        checkin_resp.raise_for_status()
+        
+        # 核心修改：只提取 message 字段
+        res_json = checkin_resp.json()
+        print(f"✅ 签到结果: {res_json.get('message')}") 
+
+    except Exception as e:
+        print(f"❌ Checkin Failed: {e}")
 
     # 2. 查询状态
-    state = requests.get(f'{base_url}/api/user/status', headers=headers)
-    state.raise_for_status()
-    print("State:", state.json())
+    try:
+        state_resp = requests.get(f'{base_url}/api/user/status', headers=headers)
+        state_resp.raise_for_status()
+        
+        # 核心修改：只提取 leftDays 并取整
+        data = state_resp.json().get('data', {})
+        days = float(data.get('leftDays', 0))
+        print(f"📅 剩余天数: {int(days)}")
+
+    except Exception as e:
+        print(f"❌ Status Check Failed: {e}")
